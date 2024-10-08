@@ -18,7 +18,7 @@ app = flask.Flask(__name__) # sets up the app
 app.config["DEBUG"] = True
 
 # investors
-@app.route('/api/investor', methods=['POST'])
+@app.route('/api/investor', methods=['POST']) # create investor
 def add_investor(): # adding a cat through postman "post & json format." you can also use the cursor function to add the new investor to the database
     request_data = request.get_json() #payload
     newfname = request_data['firstname']
@@ -30,7 +30,7 @@ def add_investor(): # adding a cat through postman "post & json format." you can
     cursor.execute(query)
     return f"A new investor has been added to the table"
 
-@app.route('/api/investor', methods=['PUT'])
+@app.route('/api/investor', methods=['PUT']) # update investor
 def update_investor():
     request_data = request.get_json()
     idToUpdate = request_data['id']
@@ -39,25 +39,23 @@ def update_investor():
 
     cursor = conn.cursor(dictionary=True)
 
-    #this command updates the cat entry
     query = f"UPDATE investor SET firstname = '{updatefname}', lastname = '{updatelname}' WHERE id = {idToUpdate}"
     cursor.execute(query)
     return f"Investor {idToUpdate} has been updated"
 
-@app.route('/api/investor', methods=['DELETE'])
-def delete_investor(): #deleting a cat
+@app.route('/api/investor', methods=['DELETE']) # delete investor
+def delete_investor(): 
     request_data = request.get_json()
     idToDelete = request_data['id']
 
     cursor = conn.cursor(dictionary=True)
 
-    #this command deletes a cat entry
     query = f"DELETE FROM investor WHERE id = {idToDelete}"
     cursor.execute(query)
     return f"Investor {idToDelete} has been deleted"
 
 # bonds
-@app.route('/api/bond', methods=['POST'])
+@app.route('/api/bond', methods=['POST']) # create bond
 def add_bond(): 
     request_data = request.get_json() #payload
     newbname = request_data['bondname']
@@ -70,7 +68,7 @@ def add_bond():
     cursor.execute(query)
     return f"A new bond has been added to the table"
 
-@app.route('/api/bond', methods=['PUT'])
+@app.route('/api/bond', methods=['PUT']) # update bond
 def update_bond():
     request_data = request.get_json()
     idToUpdate = request_data['id']
@@ -84,7 +82,7 @@ def update_bond():
     cursor.execute(query)
     return f"Bond {idToUpdate} has been updated"
 
-@app.route('/api/bond', methods=['DELETE'])
+@app.route('/api/bond', methods=['DELETE']) # delete bond
 def delete_bond():
     request_data = request.get_json()
     idToDelete = request_data['id']
@@ -96,7 +94,7 @@ def delete_bond():
     return f"Bond {idToDelete} has been deleted"
 
 # stocks
-@app.route('/api/stock', methods=['POST'])
+@app.route('/api/stock', methods=['POST']) # create stock
 def add_stock(): 
     request_data = request.get_json() #payload
     newsname = request_data['stockname']
@@ -109,7 +107,7 @@ def add_stock():
     cursor.execute(query)
     return f"A new stock has been added to the table"
 
-@app.route('/api/stock', methods=['PUT'])
+@app.route('/api/stock', methods=['PUT']) # update stock
 def update_stock():
     request_data = request.get_json()
     idToUpdate = request_data['id']
@@ -123,7 +121,7 @@ def update_stock():
     cursor.execute(query)
     return f"Stock {idToUpdate} has been updated"
 
-@app.route('/api/stock', methods=['DELETE'])
+@app.route('/api/stock', methods=['DELETE']) # delete stock
 def delete_stock(): 
     request_data = request.get_json()
     idToDelete = request_data['id']
@@ -133,5 +131,31 @@ def delete_stock():
     query = f"DELETE FROM stock WHERE id = {idToDelete}"
     cursor.execute(query)
     return f"Stock {idToDelete} has been deleted"
+
+# transactions
+@app.route('/api/stock/transaction', methods=['POST']) # create stock
+def add_stocktrans(): 
+    request_data = request.get_json() #payload
+    invid = request_data['investorid']
+    stockid = request_data['stockid']
+    quantity = request_data['quantity']
+
+    cursor = conn.cursor(dictionary=True)
+
+    query = f"INSERT INTO stocktransaction (investorid, stockid, quantity) VALUES ('{invid}','{stockid}','{quantity}')"
+    cursor.execute(query)
+    return f"Investor {invid} created a new stock transaction for stock {stockid}."
+
+@app.route('/api/stock/transaction', methods=['DELETE']) # delete stock
+def delete_stocktrans(): 
+    request_data = request.get_json()
+    idToDelete = request_data['id']
+
+    cursor = conn.cursor(dictionary=True)
+
+    query = f"DELETE FROM stocktransaction WHERE id = {idToDelete}"
+    cursor.execute(query)
+    return f"Stock transaction {idToDelete} has been deleted"
+
 
 app.run()
