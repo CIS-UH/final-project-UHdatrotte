@@ -58,7 +58,7 @@ def delete_investor(): #deleting a cat
 
 # bonds
 @app.route('/api/bond', methods=['POST'])
-def add_bond(): # adding a cat through postman "post & json format." you can also use the cursor function to add the new investor to the database
+def add_bond(): 
     request_data = request.get_json() #payload
     newbname = request_data['bondname']
     newbabbr = request_data['abbreviation']
@@ -80,22 +80,58 @@ def update_bond():
 
     cursor = conn.cursor(dictionary=True)
 
-    #this command updates the cat entry
     query = f"UPDATE bond SET bondname = '{updatebname}', abbreviation = '{updatebabbr}', currentprice = '{updatebprice}' WHERE id = {idToUpdate}"
     cursor.execute(query)
     return f"Bond {idToUpdate} has been updated"
 
 @app.route('/api/bond', methods=['DELETE'])
-def delete_bond(): #deleting a cat
+def delete_bond():
     request_data = request.get_json()
     idToDelete = request_data['id']
 
     cursor = conn.cursor(dictionary=True)
 
-    #this command deletes a cat entry
     query = f"DELETE FROM bond WHERE id = {idToDelete}"
     cursor.execute(query)
     return f"Bond {idToDelete} has been deleted"
 
+# stocks
+@app.route('/api/stock', methods=['POST'])
+def add_stock(): 
+    request_data = request.get_json() #payload
+    newsname = request_data['stockname']
+    newsabbr = request_data['abbreviation']
+    newsprice = request_data['currentprice']
+
+    cursor = conn.cursor(dictionary=True)
+
+    query = f"INSERT INTO stock (stockname, abbreviation, currentprice) VALUES ('{newsname}','{newsabbr}','{newsprice}')"
+    cursor.execute(query)
+    return f"A new stock has been added to the table"
+
+@app.route('/api/stock', methods=['PUT'])
+def update_stock():
+    request_data = request.get_json()
+    idToUpdate = request_data['id']
+    updatesname = request_data['stockname']
+    updatesabbr = request_data['abbreviation']
+    updatesprice = request_data['currentprice']
+
+    cursor = conn.cursor(dictionary=True)
+
+    query = f"UPDATE stock SET stockname = '{updatesname}', abbreviation = '{updatesabbr}', currentprice = '{updatesprice}' WHERE id = {idToUpdate}"
+    cursor.execute(query)
+    return f"Stock {idToUpdate} has been updated"
+
+@app.route('/api/stock', methods=['DELETE'])
+def delete_stock(): 
+    request_data = request.get_json()
+    idToDelete = request_data['id']
+
+    cursor = conn.cursor(dictionary=True)
+
+    query = f"DELETE FROM stock WHERE id = {idToDelete}"
+    cursor.execute(query)
+    return f"Stock {idToDelete} has been deleted"
 
 app.run()
