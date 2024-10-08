@@ -132,7 +132,7 @@ def delete_stock():
     cursor.execute(query)
     return f"Stock {idToDelete} has been deleted"
 
-# transactions
+# stock transactions
 @app.route('/api/stock/transaction', methods=['POST']) # create stock
 def add_stocktrans(): 
     request_data = request.get_json() #payload
@@ -157,5 +157,29 @@ def delete_stocktrans():
     cursor.execute(query)
     return f"Stock transaction {idToDelete} has been deleted"
 
+# bond transactions
+@app.route('/api/stock/transaction', methods=['POST']) # create stock
+def add_bondtrans(): 
+    request_data = request.get_json() #payload
+    invid = request_data['investorid']
+    stockid = request_data['stockid']
+    quantity = request_data['quantity']
+
+    cursor = conn.cursor(dictionary=True)
+
+    query = f"INSERT INTO bondtransaction (investorid, stockid, quantity) VALUES ('{invid}','{stockid}','{quantity}')"
+    cursor.execute(query)
+    return f"Investor {invid} created a new bond transaction for bond {stockid}."
+
+@app.route('/api/stock/transaction', methods=['DELETE']) # delete stock
+def delete_bondtrans(): 
+    request_data = request.get_json()
+    idToDelete = request_data['id']
+
+    cursor = conn.cursor(dictionary=True)
+
+    query = f"DELETE FROM bondtransaction WHERE id = {idToDelete}"
+    cursor.execute(query)
+    return f"Bond transaction {idToDelete} has been deleted"
 
 app.run()
