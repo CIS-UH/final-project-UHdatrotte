@@ -235,5 +235,4 @@ def delete_stocktrans():
     cursor.execute(query)
     return f"Stock transaction {idToDelete} has been deleted"
 
-
 app.run()
