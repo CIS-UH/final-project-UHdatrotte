@@ -93,8 +93,21 @@ def delete_bond():
     cursor.execute(query)
     return f"Bond {idToDelete} has been deleted"
 
+# investor's bond portfolio
+@app.route('/api/bond/investor', methods=['GET'])
+def investor_port():
+    request_data = request.get_json()
+    idToSelect = request_data['id']
+
+    cursor = conn.cursor(dictionary=True)
+
+    query = f"SELECT * FROM bondtransaction WHERE investorid = {idToSelect}"
+    cursor.execute(query)
+    bond_port = cursor.fetchall()
+    return jsonify(bond_port)
+
 # bond transactions
-@app.route('/api/stock/transaction', methods=['POST']) # create stock
+@app.route('/api/bond/transaction', methods=['POST']) # create stock
 def add_bondtrans(): 
     request_data = request.get_json() #payload
     invid = request_data['investorid']
@@ -107,7 +120,7 @@ def add_bondtrans():
     cursor.execute(query)
     return f"Investor {invid} created a new bond transaction for bond {stockid}."
 
-@app.route('/api/stock/transaction', methods=['DELETE']) # delete stock
+@app.route('/api/bond/transaction', methods=['DELETE']) # delete stock
 def delete_bondtrans(): 
     request_data = request.get_json()
     idToDelete = request_data['id']
@@ -156,6 +169,19 @@ def delete_stock():
     query = f"DELETE FROM stock WHERE id = {idToDelete}"
     cursor.execute(query)
     return f"Stock {idToDelete} has been deleted"
+
+# investor's stock portfolio
+@app.route('/api/stock/investor', methods=['GET'])
+def investor_port():
+    request_data = request.get_json()
+    idToSelect = request_data['id']
+
+    cursor = conn.cursor(dictionary=True)
+
+    query = f"SELECT * FROM stocktransaction WHERE investorid = {idToSelect}"
+    cursor.execute(query)
+    stock_port = cursor.fetchall()
+    return jsonify(stock_port)
 
 # stock transactions
 @app.route('/api/stock/transaction', methods=['POST']) # create stock
