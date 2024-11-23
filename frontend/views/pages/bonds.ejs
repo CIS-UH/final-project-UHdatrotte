@@ -1,0 +1,64 @@
+<%- include('../template/head')-%>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <%- include('../template/nav')-%>
+        <h1 class="cover-heading">Available Bonds</h1>
+        <div class="container bg-light text-dark">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Bond Number</th>
+                        <th>Name</th>
+                        <th>Abbreviation</th>
+                        <th>Current Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%bonds.forEach(function(bond) {%>
+                    <tr>
+                        <td><%=bond.bondid%></td>
+                        <td><%=bond.bondname%></td>
+                        <td><%=bond.abbreviation%></td>
+                        <td><%=bond.currentprice%></td>
+                    </tr>
+                    <%});%>
+                </tbody>
+            </table>
+            <h2>Add a Bond</h2>
+            <form action="/badd" method="POST">
+                <div class="form-group">
+                    <input type="text" name="bnewname" id="bnewname" placeholder="Insert Bond Name">
+                    <input type="text" name="bnewabbr" id="bnewabbr" placeholder="Insert Abbreviation Name">
+                    <input type="number" name="bnewprice" id="bnewprice" placeholder="Insert Price">
+                    <button id="mySubmit" type="submit" class="btn btn-dark">Add</button>
+                </div>
+            </form>
+            <h2>Update a Bond</h2>
+            <form action="/bupdate" method="POST">
+                <div class="form-group">
+                    <input type="text" name="bupdnum" id="bupdnum" placeholder="Insert Bond Number">
+                    <input type="text" name="bupdname" id="bupdname" placeholder="Update Bond Name">
+                    <input type="text" name="bupdabbr" id="bupdabbr" placeholder="Update Abbreviation Name">
+                    <input type="number" name="bupdprice" id="bupdprice" placeholder="Update Price">
+                    <button id="mySubmit" type="submit" class="btn btn-dark">Update</button>
+                </div>
+            </form>
+            <h2>Delete a Bond</h2>
+            <form action="/bdelete" method="POST">
+                <div class="form-group">
+                    <input type="text" name="bdelnum" id="bdelnum" placeholder="Insert Bond Number">
+                    <button id="mySubmit" type="submit" class="btn btn-dark">Delete</button>
+                </div>
+            </form>
+        </div>
+        <%- include('../template/footer')-%>
+    </div>
+
+</body>
+<script>
+    window.onload = function() {
+        document.getElementById('b_table').classList.add('active');
+      };
+</script>
+</html>

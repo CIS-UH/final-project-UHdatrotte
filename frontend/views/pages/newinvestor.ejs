@@ -1,0 +1,32 @@
+<%- include('../template/head')-%>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <%- include('../template/nav')-%>
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">The Amazing Stock Brokerage System</h1>
+            <% if (body.invnewfname) { %>
+                <p class="lead"><i><%=body.invnewfname %></i> <i><%=body.invnewlname %></i> is a new investor!</p>
+            <% } %>
+
+            <% if (body.invupdnum) { %>
+                <p class="lead">Investor ID <i><%=body.invupdnum %></i> has been updated!</p>
+            <% } %>
+
+            <% if (body.invdelnum) { %>
+                <p class="lead">Investor ID <i><%=body.invdelnum %></i> has been deleted!</p>
+            <% } %>
+
+            <p class="lead">
+                <a href="/investors" class="btn btn-lg btn-secondary">View Investors</a>
+            </p>
+        </main>
+        <%- include('../template/footer')-%>
+    </div>
+</body>
+<script>
+    window.onload = function() {
+        document.getElementById('home').classList.add('active');
+      };
+</script>
+</html>

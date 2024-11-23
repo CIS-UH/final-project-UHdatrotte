@@ -1,0 +1,64 @@
+<%- include('../template/head')-%>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <%- include('../template/nav')-%>
+        <h1 class="cover-heading">Available Stocks</h1>
+        <div class="container bg-light text-dark">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Stock Number</th>
+                        <th>Name</th>
+                        <th>Abbreviation</th>
+                        <th>Current Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%stocks.forEach(function(stock) {%>
+                    <tr>
+                        <td><%=stock.stockid%></td>
+                        <td><%=stock.stockname%></td>
+                        <td><%=stock.abbreviation%></td>
+                        <td><%=stock.currentprice%></td>
+                    </tr>
+                    <%});%>
+                </tbody>
+            </table>
+            <h2>Add a Stock</h2>
+            <form action="/add" method="POST">
+                <div class="form-group">
+                    <input type="text" name="newname" id="newname" placeholder="Insert Stock Name">
+                    <input type="text" name="newabbr" id="newabbr" placeholder="Insert Abbreviation Name">
+                    <input type="number" name="newprice" id="newprice" placeholder="Insert Price">
+                    <button id="mySubmit" type="submit" class="btn btn-dark">Add</button>
+                </div>
+            </form>
+            <h2>Update a Stock</h2>
+            <form action="/update" method="POST">
+                <div class="form-group">
+                    <input type="text" name="updnum" id="updnum" placeholder="Insert Stock Number">
+                    <input type="text" name="updname" id="updname" placeholder="Update Stock Name">
+                    <input type="text" name="updabbr" id="updabbr" placeholder="Update Abbreviation Name">
+                    <input type="number" name="updprice" id="updprice" placeholder="Update Price">
+                    <button id="mySubmit" type="submit" class="btn btn-dark">Update</button>
+                </div>
+            </form>
+            <h2>Delete a Stock</h2>
+            <form action="/delete" method="POST">
+                <div class="form-group">
+                    <input type="text" name="delnum" id="delnum" placeholder="Insert Stock Number">
+                    <button id="mySubmit" type="submit" class="btn btn-dark">Delete</button>
+                </div>
+            </form>
+        </div>
+        <%- include('../template/footer')-%>
+    </div>
+
+</body>
+<script>
+    window.onload = function() {
+        document.getElementById('s_table').classList.add('active');
+      };
+</script>
+</html>

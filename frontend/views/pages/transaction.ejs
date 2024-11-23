@@ -1,0 +1,35 @@
+<%- include('../template/head')-%>
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <%- include('../template/nav')-%>
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">Transaction</h1>
+            <form method="POST" action="/transaction">
+                <h2>View an Investor's Transactions</h2>
+                <div>
+                    <select name="selectedInv" id="selectedInv">
+                        <% investors.forEach(function(investor){ %>
+                            <option value= "<%= investor.investid %>"> <%= investor.firstname %> <%= investor.lastname %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="include-radio">
+                    <input type="radio" name="stock" value="stock">
+                    <label class="include-radio-label" for="Stock">View Stock Transactions</label>
+                    <input type="radio" name="bond" value="bond">
+                    <label class="include-radio-label" for="Bonds">View Bond Transactions</label>
+                </div>
+                <button type="submit" class="btn btn-dark">View Transactions</button>
+            </form>
+        </main>
+        <%- include('../template/footer')-%>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        document.getElementById('transaction').classList.add('active');
+    };
+
+</script>
+
+</html>

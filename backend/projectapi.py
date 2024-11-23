@@ -28,7 +28,7 @@ def investor_all(): # all investors
     return jsonify(investors)
 
 @app.route('/api/investor', methods=['POST']) # create investor
-def add_investor(): # adding a cat through postman "post & json format." you can also use the cursor function to add the new investor to the database
+def add_investor(): # adding a investor through postman "post & json format." you can also use the cursor function to add the new investor to the database
     request_data = request.get_json() #payload
     newfname = request_data['firstname']
     newlname = request_data['lastname']
@@ -124,6 +124,19 @@ def investor_port_bond():
     bond_port = cursor.fetchall()
     return jsonify(bond_port)
 
+# investor's actual bond portfolio
+@app.route('/api/bond/investor/port', methods=['GET'])
+def real_investor_port_bond():
+    request_data = request.get_json()
+    idToSelect = request_data['investorid']
+
+    cursor = conn.cursor(dictionary=True)
+
+    query = f"SELECT i.investid, i.firstname, i.lastname, bd.bondname, bd.bondid FROM investor i JOIN bondtransaction b ON i.investid = b.investorid JOIN bond bd ON b.bondid = bd.bondid WHERE i.investid = {idToSelect}"
+    cursor.execute(query)
+    invb_port = cursor.fetchall()
+    return jsonify(invb_port)
+
 # bond transactions
 @app.route('/api/bond/transaction', methods=['POST'])
 def add_bondtrans(): 
@@ -209,6 +222,19 @@ def investor_port_stock():
     cursor.execute(query)
     stock_port = cursor.fetchall()
     return jsonify(stock_port)
+
+# investor's actual stock portfolio
+@app.route('/api/stock/investor/port', methods=['GET'])
+def real_investor_port_stock():
+    request_data = request.get_json()
+    idToSelect = request_data['investorid']
+
+    cursor = conn.cursor(dictionary=True)
+
+    query = f"SELECT i.investid, i.firstname, i.lastname, st.stockname, st.stockid FROM investor i JOIN stocktransaction s ON i.investid = s.investorid JOIN stock st ON s.stockid = st.stockid WHERE i.investid = {idToSelect}"
+    cursor.execute(query)
+    inv_port = cursor.fetchall()
+    return jsonify(inv_port)
 
 # stock transactions
 @app.route('/api/stock/transaction', methods=['POST']) # create stock

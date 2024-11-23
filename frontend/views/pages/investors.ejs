@@ -1,0 +1,60 @@
+<%- include('../template/head')-%>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <%- include('../template/nav')-%>
+        <h1 class="cover-heading">Investors</h1>
+        <div class="container bg-light text-dark">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Investor ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%investors.forEach(function(investor) {%>
+                    <tr>
+                        <td><%=investor.investid%></td>
+                        <td><%=investor.firstname%></td>
+                        <td><%=investor.lastname%></td>
+                    </tr>
+                    <%});%>
+                </tbody>
+            </table>
+            <h2>Add an Investor</h2>
+            <form action="/invadd" method="POST">
+                <div class="form-group">
+                    <input type="text" name="invnewfname" id="invnewfname" placeholder="Insert First Name">
+                    <input type="text" name="invnewlname" id="invnewlname" placeholder="Insert Last Name">
+                    <button id="mySubmit" type="submit" class="btn btn-dark">Add</button>
+                </div>
+            </form>
+            <h2>Update an Investor</h2>
+            <form action="/invupdate" method="POST">
+                <div class="form-group">
+                    <input type="text" name="invupdnum" id="invupdnum" placeholder="Insert Investor ID">
+                    <input type="text" name="updfname" id="updfname" placeholder="Update First Name">
+                    <input type="text" name="updlname" id="updlname" placeholder="Update Last Name">
+                    <button id="mySubmit" type="submit" class="btn btn-dark">Update</button>
+                </div>
+            </form>
+            <h2>Delete an Investor</h2>
+            <form action="/invdelete" method="POST">
+                <div class="form-group">
+                    <input type="text" name="invdelnum" id="invdelnum" placeholder="Insert Investor ID">
+                    <button id="mySubmit" type="submit" class="btn btn-dark">Delete</button>
+                </div>
+            </form>
+        </div>
+        <%- include('../template/footer')-%>
+    </div>
+
+</body>
+<script>
+    window.onload = function() {
+        document.getElementById('inv_table').classList.add('active');
+      };
+</script>
+</html>

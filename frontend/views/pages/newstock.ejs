@@ -1,0 +1,31 @@
+<%- include('../template/head')-%>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <%- include('../template/nav')-%>
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">The Amazing Stock Brokerage System</h1>
+            <% if (body.newname) { %>
+                <p class="lead">The <i><%=body.newname %></i> stock has been added!</p>
+            <% } %>
+
+            <% if (body.updnum) { %>
+                <p class="lead">Stock number <i><%=body.updnum %></i> has been updated!</p>
+            <% } %>
+
+            <% if (body.delnum) { %>
+                <p class="lead">Stock number <i><%=body.delnum %></i> has been deleted!</p>
+            <% } %>
+            <p class="lead">
+                <a href="/stocks" class="btn btn-lg btn-secondary">View Stocks</a>
+            </p>
+        </main>
+        <%- include('../template/footer')-%>
+    </div>
+</body>
+<script>
+    window.onload = function() {
+        document.getElementById('home').classList.add('active');
+      };
+</script>
+</html>

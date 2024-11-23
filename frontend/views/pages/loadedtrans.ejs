@@ -1,0 +1,98 @@
+<%- include('../template/head')-%>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <%- include('../template/nav')-%>
+        <!--Include if statement-->
+        <% if (body.bond) { %>
+            <h1 class="cover-heading">Investor <%=selectedInvId%>'s Bond Transactions</h1>
+            <div class="container bg-light text-dark">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Bond Transaction Number</th>
+                            <th>Bond ID</th>
+                            <th>Quantity</th>
+                            <th>Date of Transaction</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%transactions.forEach(function(transaction) {%>
+                        <tr>
+                            <td><%=transaction.bondtransid%></td>
+                            <td><%=transaction.bondid%></td>
+                            <td><%=transaction.quantity%></td>
+                            <td><%=transaction.date%></td>
+                        </tr>
+                        <%})%>
+                    </tbody>
+                </table>
+                <h2>Create a Transaction</h2>
+                <form action="/newbondtrans" method="POST">
+                    <div class="form-group">
+                        <input type="radio" id="selectedInvestor" name="selectedInvestor" value="<%=selectedInvId%>" checked>
+                        <input type="text" name="bondtbondid" id="bondtbondid" placeholder="Insert Bond ID">
+                        <input type="number" name="bondtquant" id="bondtquant" placeholder="Insert Quantity">
+                        <button id="mySubmit" type="submit" class="btn btn-dark">Create</button>
+                    </div>
+                </form>
+                <h2>Delete a Transaction</h2>
+                <form action="/delbondtrans" method="POST">
+                    <div class="form-group">
+                        <input type="number" name="bondtransnum" id="bondtransnum" placeholder="Bond Transaction Number">
+                        <button id="mySubmit" type="submit" class="btn btn-dark">Delete</button>
+                    </div>
+                </form>
+            </div>
+        <% } %>
+        <% if (body.stock) { %>
+            <h1 class="cover-heading">Investor <%=selectedInvId%>'s Stock Transactions</h1>
+            <div class="container bg-light text-dark">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Stock Transaction Number</th>
+                            <th>Stock ID</th>
+                            <th>Quantity</th>
+                            <th>Date of Transaction</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%transactions.forEach(function(transaction) {%>
+                        <tr>
+                            <td><%=transaction.stocktransid%></td>
+                            <td><%=transaction.stockid%></td>
+                            <td><%=transaction.quantity%></td>
+                            <td><%=transaction.date%></td>
+                        </tr>
+                        <%})%>
+                    </tbody>
+                </table>
+                <h2>Create a Transaction</h2>
+                <form action="/newstocktrans" method="POST">
+                    <div class="form-group">
+                        <input type="radio" id="selectedstockInvestor" name="selectedstockInvestor" value="<%=selectedInvId%>" checked>
+                        <input type="text" name="stocktstockid" id="stocktstockid" placeholder="Insert Stock ID">
+                        <input type="number" name="stocktquant" id="stocktquant" placeholder="Insert Quantity">
+                        <button id="mySubmit" type="submit" class="btn btn-dark">Create</button>
+                    </div>
+                </form>
+                <h2>Delete a Transaction</h2>
+                <form action="/delstocktrans" method="POST">
+                    <div class="form-group">
+                        <input type="number" name="stocktransnum" id="stocktransnum" placeholder="Stock Transaction Number">
+                        <button id="mySubmit" type="submit" class="btn btn-dark">Delete</button>
+                    </div>
+                </form>
+            </div>
+            <% } %>
+        <%- include('../template/footer')-%>
+    </div>
+
+</body>
+<script>
+    window.onload = function() {
+        document.getElementById('transaction').classList.add('active');
+      };
+</script>
+</html>

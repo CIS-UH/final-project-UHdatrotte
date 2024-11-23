@@ -1,0 +1,32 @@
+<%- include('../template/head')-%>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <%- include('../template/nav')-%>
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">The Amazing Stock Brokerage System</h1>
+            <% if (body.bnewname) { %>
+                <p class="lead">The <i><%=body.bnewname %></i> bond has been added!</p>
+            <% } %>
+
+            <% if (body.bupdnum) { %>
+                <p class="lead">Bond number <i><%=body.bupdnum %></i> has been updated!</p>
+            <% } %>
+
+            <% if (body.bdelnum) { %>
+                <p class="lead">Bond number <i><%=body.bdelnum %></i> has been deleted!</p>
+            <% } %>
+            
+            <p class="lead">
+                <a href="/bonds" class="btn btn-lg btn-secondary">View Bonds</a>
+            </p>
+        </main>
+        <%- include('../template/footer')-%>
+    </div>
+</body>
+<script>
+    window.onload = function() {
+        document.getElementById('home').classList.add('active');
+      };
+</script>
+</html>

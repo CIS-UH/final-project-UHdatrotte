@@ -1,0 +1,35 @@
+<%- include('../template/head')-%>
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <%- include('../template/nav')-%>
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">Portfolio</h1>
+            <form method="POST" action="/portfolio">
+                <h2>View an Investor's Portfolio</h2>
+                <div>
+                    <select name="realPortselectedInv" id="realPortselectedInv">
+                        <% investors.forEach(function(investor){ %>
+                            <option value= "<%= investor.investid %>"> <%= investor.firstname %> <%= investor.lastname %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="include-radio">
+                    <input type="radio" name="realPortstock" value="realPortstock">
+                    <label class="include-radio-label" for="Stock">View Stock Portfolio</label>
+                    <input type="radio" name="realPortbond" value="realPortbond">
+                    <label class="include-radio-label" for="Bonds">View Bond Portfolio</label>
+                </div>
+                <button type="submit" class="btn btn-dark">View Portfolio</button>
+            </form>
+        </main>
+        <%- include('../template/footer')-%>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        document.getElementById('portfolio').classList.add('active');
+    };
+
+</script>
+
+</html>
